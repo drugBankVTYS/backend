@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const { ObjectId } = mongoose.Schema;
 const jwt = require("jsonwebtoken");
 
+
 const drugSchema = new mongoose.Schema({
         drug_id: {
             type:String,
@@ -79,6 +80,7 @@ drugSchema.methods.getJwtToken = function () {
     });
 }
 
-
+// Ensure an index on the drug_name field
+drugSchema.index({ drug_name: 1 });
 
 module.exports = mongoose.model("drug", drugSchema);
