@@ -1,22 +1,16 @@
+const DrugService=require('../service/DrugService');
 const Drug = require('../models/DrugSchema');
 
 
     //get all drugs
     exports.allDrugs = async(req,res,next)=>{
-         //enable pagination
-         //http://localhost:3000/api/alldrugs?pageNumber=2 
-         const pageSize = 5;
-         const page = Number(req.query.pageNumber) || 1;
-         const count = await Drug.find().countDocuments();
+    
 
     try {
         //find all drugs but do not show in one single page. Show it with pagination
-        const drugs = await Drug.find().skip(pageSize * (page - 1)).limit(pageSize)
+        const drugs = await DrugService.getAllDrugs(req,res,next);
         res.status(200).json({
             success: true,
-            page,
-            pages: Math.ceil(count / pageSize),
-            count,
             drugs
             
         })
@@ -28,7 +22,7 @@ const Drug = require('../models/DrugSchema');
     //get drug with id
     exports.getSingleDrug= async(req,res,next)=>{
         try{    
-            const drug = await Drug.findById(req.params.id);
+            const drug = await DrugService.getSingleDrug(req,res,next);
             res.status(200).json({
                 success:true,
                 drug
@@ -43,7 +37,7 @@ const Drug = require('../models/DrugSchema');
   //create a new drug
   exports.createDrug= async (req,res,next)=>{
     try{
-        const drug = await Drug.create(req.body);
+        const drug = await DrugService.createDrug(req,res,next);
         
         res.status(201).json({
             drug
@@ -60,7 +54,7 @@ const Drug = require('../models/DrugSchema');
 exports.deleteDrug= async (req,res,next) =>{
     try{
         //find drug and delete 
-        const deletedDrug = await Drug.findByIdAndDelete(req.params.id);
+        const deletedDrug = await DrugService.deleteDrug(req,res,next);
         res.status(200).json({
             success:1,
             deletedDrug
@@ -74,7 +68,7 @@ exports.deleteDrug= async (req,res,next) =>{
 // Update the drug
 exports.updateDrug = async(req,res,next) =>{
     try{
-        const updatedDrug = await Drug.findByIdAndUpdate(req.params.drug_id, req.body, {new : true});
+        const updatedDrug = await DrugService.updateDrug(req,res,next);
         res.status(200).json({
             success:1,
             updatedDrug
@@ -85,27 +79,21 @@ exports.updateDrug = async(req,res,next) =>{
 }
 
 //Find the drug with partial drug_name match   
-//Code revides to reduce runtime -> From 2 second to range in 500ms to 1.5sec
+//Code revides to reduce runtime -> From 2 second to range in 500ms to 1.5sec  
+//Review -> Last performance was 1001 ms
 exports.showDrugWithName = async (req, res, next) => {
-    const partialDrugName = new RegExp(req.query.name, 'i'); // i provide not case sensivity
-    const pageSize = 5;
-    const page = Number(req.query.pageNumber) || 1;
-
+   
     try {
-        // Get drugs with Promise functionality
-        const [count, drugs] = await Promise.all([
-            Drug.countDocuments({ drug_name: partialDrugName }),
-            Drug.find({ drug_name: partialDrugName }).skip(pageSize * (page - 1)).limit(pageSize)
-        ]);
+        const drugs = await DrugService.showDrugWithName(req,res,next);
 
         res.status(200).json({
             success: true,
             drugs,
-            page,
-            pages: Math.ceil(count / pageSize),
-            count
+            
         });
     } catch (error) {
         next(error);
     }
 };
+
+

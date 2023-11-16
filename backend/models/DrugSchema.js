@@ -80,7 +80,5 @@ drugSchema.methods.getJwtToken = function () {
     });
 }
 
-// Ensure an index on the drug_name field
-drugSchema.index({ drug_name: 1 });
 
 module.exports = mongoose.model("drug", drugSchema);
