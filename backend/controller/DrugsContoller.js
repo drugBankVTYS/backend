@@ -9,11 +9,7 @@ const Drug = require('../models/DrugSchema');
     try {
         //find all drugs but do not show in one single page. Show it with pagination
         const drugs = await DrugService.getAllDrugs(req,res,next);
-        res.status(200).json({
-            success: true,
-            drugs
-            
-        })
+       
      } catch (error) {
         next(error);
      }
@@ -23,11 +19,7 @@ const Drug = require('../models/DrugSchema');
     exports.getSingleDrug= async(req,res,next)=>{
         try{    
             const drug = await DrugService.getSingleDrug(req,res,next);
-            res.status(200).json({
-                success:true,
-                drug
-            })
-            next();
+          
         }catch(error){
             next(error);
         }
@@ -38,10 +30,7 @@ const Drug = require('../models/DrugSchema');
   exports.createDrug= async (req,res,next)=>{
     try{
         const drug = await DrugService.createDrug(req,res,next);
-        
-        res.status(201).json({
-            drug
-        })
+       
     }catch(error){
         next(error);
         console.log(error);
@@ -55,10 +44,7 @@ exports.deleteDrug= async (req,res,next) =>{
     try{
         //find drug and delete 
         const deletedDrug = await DrugService.deleteDrug(req,res,next);
-        res.status(200).json({
-            success:1,
-            deletedDrug
-        })
+       
     
     }catch(error){
             next(error);
@@ -69,10 +55,7 @@ exports.deleteDrug= async (req,res,next) =>{
 exports.updateDrug = async(req,res,next) =>{
     try{
         const updatedDrug = await DrugService.updateDrug(req,res,next);
-        res.status(200).json({
-            success:1,
-            updatedDrug
-        })
+       
     }catch(error) {
         next(error);
     }
@@ -86,11 +69,7 @@ exports.showDrugWithName = async (req, res, next) => {
     try {
         const drugs = await DrugService.showDrugWithName(req,res,next);
 
-        res.status(200).json({
-            success: true,
-            drugs,
-            
-        });
+       
     } catch (error) {
         next(error);
     }
