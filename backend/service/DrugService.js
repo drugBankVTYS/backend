@@ -99,7 +99,7 @@ class DrugService{
     }
 }
 
-// Update the drug
+// Update the drug(FOR ONLY ADMIN)
  async updateDrug (req,res,next) {
     try{
         //find and update drug
