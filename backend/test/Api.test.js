@@ -77,4 +77,79 @@ describe("Get drug given name", () => {
   }, 20000);
 });
 
+//api/createdrug
+describe("Post a new drug", () => {
+  test("Post drug", async () => {
+    const response = await request(app)
+      .post("/api/createdrug")
+      .send(exampleDrugData);
 
+
+      //We try see if our new data matches to schema
+    expect(response.statusCode).toBe(201);
+    expect(response.body.drug).toHaveProperty(
+      "drug_id",
+      "65521e7b13f6f29d4c469e93"
+    );
+    expect(response.body.drug).toHaveProperty("drug_name", "Example Drug");
+    expect(response.body.drug).toHaveProperty("drug_state", "Active");
+    expect(response.body.drug).toHaveProperty("drug_kingdom", "Animalia");
+    expect(response.body.drug).toHaveProperty(
+      "drug_superclass",
+      "Organic compounds"
+    );
+    expect(response.body.drug).toHaveProperty("drug_interactions", [
+      "Interaction1",
+      "Interaction2",
+    ]);
+    expect(response.body.drug).toHaveProperty("drug_pathways", [
+      "Pathway1",
+      "Pathway2",
+    ]);
+    expect(response.body.drug).toHaveProperty("drug_toxicity", [
+      "Toxicity1",
+      "Toxicity2",
+    ]);
+    expect(response.body.drug).toHaveProperty("drug_food_interactions", [
+      "FoodInteraction1",
+      "FoodInteraction2",
+    ]);
+    expect(response.body.drug).toHaveProperty("target_name", "TargetName");
+    expect(response.body.drug).toHaveProperty(
+      "target_uniprot",
+      "TargetUniprot"
+    );
+    expect(response.body.drug).toHaveProperty(
+      "target_gene_name",
+      "TargetGeneName"
+    );
+    expect(response.body.drug).toHaveProperty("action", "Action");
+    expect(response.body.drug).toHaveProperty("cell_loc", "CellLocation");
+  });
+}, 20000);
+
+//api/updatedrug/:{id}
+describe("Update a new drug", () => {
+  test("Update drug", async () => {
+    
+    const drug = await Drug.create(exampleDrugData);
+
+    // We are sending same data as required body parameter.( We just need to see if it works correctly)
+    const response = await request(app)
+      .put(`/api/updatedrug/${drug.drug_id}`)
+      .send(exampleDrugData);
+
+    expect(response.statusCode).toBe(200); // we expect statusCode==200
+  });
+}, 20000);
+
+
+//api/deletedrug/:{id}
+describe("Delete the drug", () =>{
+  test("Delete drug", async() =>{
+
+    const response = await request(app).delete(`/api/deletedrug/${exampleDrugData.drug_id}`);
+    //Control if deleted successfully
+    expect(response.statusCode).toBe(200);
+  });
+},20000);

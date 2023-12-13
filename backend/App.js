@@ -5,9 +5,6 @@ const bodyParser = require("body-parser");
 var cors= require('cors');
 
 
-
-
-
 //Router
 const drugRoutes = require('./routes/DrugRoutes');
 
@@ -24,8 +21,5 @@ app.use(bodyParser.urlencoded({
 app.use(cors());
 
 app.use('/api',drugRoutes);
-
-
-
 
 module.exports = app;

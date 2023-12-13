@@ -108,10 +108,13 @@ class DrugService{
             success:1,
             updatedDrug
         })
+        next();
     }catch(error) {
         next(error);
     }
 }
+
+
 //Before pipeline -> 1.5sec to 2.5sec
 //After pipeline -> 600ms to 1sec
 //Find the drugs with name -> It works like LIKE % 
