@@ -99,7 +99,7 @@ class DrugService{
     }
 }
 
-// Update the drug
+// Update the drug(FOR ONLY ADMIN)
  async updateDrug (req,res,next) {
     try{
         //find and update drug
@@ -108,10 +108,13 @@ class DrugService{
             success:1,
             updatedDrug
         })
+        next();
     }catch(error) {
         next(error);
     }
 }
+
+
 //Before pipeline -> 1.5sec to 2.5sec
 //After pipeline -> 600ms to 1sec
 //Find the drugs with name -> It works like LIKE % 

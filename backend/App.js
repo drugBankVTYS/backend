@@ -5,10 +5,6 @@ const bodyParser = require("body-parser");
 var cors= require('cors');
 
 
-
-//Port
-const port = process.env.PORT || 9000;
-
 //Router
 const drugRoutes = require('./routes/DrugRoutes');
 
@@ -26,8 +22,4 @@ app.use(cors());
 
 app.use('/api',drugRoutes);
 
-
-//Launch App
-app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
-});
+module.exports = app;
