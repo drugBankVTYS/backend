@@ -7,7 +7,7 @@ class DrugService{
     async getAllDrugs(req, res, next) {
         // Enable pagination
         // http://localhost:3000/api/alldrugs?pageNumber=2
-        const pageSize = 5;
+        const pageSize = 9;
         const page = Number(req.query.pageNumber) || 1;
     
         try {
