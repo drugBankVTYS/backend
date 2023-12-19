@@ -1,0 +1,97 @@
+openapi: 3.0.0
+info:
+  title: İlaç API
+  version: 1.0.0
+paths:
+  /api/alldrugs:
+    get:
+      summary: Tüm ilaçları al
+      responses:
+        '200':
+          description: Başarılı yanıt
+          content:
+            application/json:
+              example:
+                drugs: []
+  /api/singledrug/{id}:
+    get:
+      summary: Belirli bir ilacı al
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Başarılı yanıt
+          content:
+            application/json:
+              example:
+                drug: {}
+        '404':
+          description: İlaç bulunamadı
+    /api/updatedrug/{id}:
+    put:
+      summary: Belirli bir ilacı güncelle
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              drugName: "Güncellenmiş İlaç"
+      responses:
+        '200':
+          description: İlaç güncellendi
+        '404':
+          description: İlaç bulunamadı
+  /api/createdrug:
+    post:
+      summary: Yeni ilaç oluştur
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              drugName: "Yeni İlaç"
+      responses:
+        '201':
+          description: İlaç oluşturuldu
+  /api/singledrug/{id}:
+    delete:
+      summary: Belirli bir ilacı sil
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: İlaç silindi
+        '404':
+          description: İlaç bulunamadı
+  /api/showdrug:
+    get:
+      summary: Kısmi ilaç adına göre ilaçları bul
+      parameters:
+        - in: query
+          name: drugName
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Başarılı yanıt
+          content:
+            application/json:
+              example:
+                drugs: []
+        '404':
+          description: İlaç bulunamadı
