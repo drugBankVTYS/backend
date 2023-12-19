@@ -3,12 +3,15 @@ const express= require('express');
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 var cors= require('cors');
+const swaggerUi = require('swagger-ui-express');
+const YAML = require('yamljs'); 
 
 
 //Router
 const drugRoutes = require('./routes/DrugRoutes');
 
 const app=express();
+const swaggerDocument = YAML.load('./Documentation.yaml'); 
 
 
 //Middleware
@@ -21,5 +24,7 @@ app.use(bodyParser.urlencoded({
 app.use(cors());
 
 app.use('/api',drugRoutes);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 
 module.exports = app;
