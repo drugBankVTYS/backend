@@ -6,25 +6,34 @@ class DrugService{
     //get all drugs
     async getAllDrugs(req, res, next) {
         // Enable pagination
-        // http://localhost:3000/api/alldrugs?pageNumber=2
+        // http://localhost:3001/api/alldrugs?pageNumber=2
         const pageSize = 9;
         const page = Number(req.query.pageNumber) || 1;
     
         try {
             // Aggregation pipeline -> Reduce code request traffic
             const pipeline = [
-                // Match stage to filter documents 
-                { $match: {} },
-                
-                // Sort stage (assuming createdAt field for sorting) -> We are sorting with that line
+                // Group stage to get unique drug names
+                {
+                    $group: {
+                        _id: '$drug_name', // Group by drug_name
+                        firstDoc: { $first: '$$ROOT' }, 
+                    },
+                },
+    
+                // ReplaceRoot stage to replace the root with the first document
+                {
+                    $replaceRoot: { newRoot: '$firstDoc' },
+                },
+    
+                // Sort stage (assuming createdAt field for sorting)
                 { $sort: { createdAt: 1 } },
-                
+    
                 // Skip and limit stages for pagination
                 { $skip: pageSize * (page - 1) },
                 { $limit: pageSize }
             ];
     
-           
             const countPipeline = [{ $count: 'count' }];
     
             // Execute aggregation pipeline for drugs
@@ -48,6 +57,7 @@ class DrugService{
             next(error);
         }
     }
+    
     
 
 
