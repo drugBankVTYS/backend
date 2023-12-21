@@ -125,44 +125,34 @@ class DrugService{
 }
 
 
-//Before pipeline -> 1.5sec to 2.5sec
-//After pipeline -> 600ms to 1sec
-//Find the drugs with name -> It works like LIKE % 
 async showDrugWithName(req, res, next) {
-    //Get full or part of drug name 
-    const partialDrugName = new RegExp(req.query.name, 'i'); // Case-insensitive regex
+    const partialDrugName = new RegExp(req.query.name, 'i');
     const pageSize = 5;
     const page = Number(req.query.pageNumber) || 1;
 
     try {
-        // MongoDB aggregation pipeline -> We are reducing request traffic on HTTP and we use pipeline
         const pipeline = [
-            // Match stage to filter documents by partialDrugName
             { $match: { drug_name: partialDrugName } },
-
-            // Skip and limit stages for pagination
+            { $group: { _id: '$drug_id', drug: { $first: '$$ROOT' } } }, // Group by drug_id and select the first document in each group
             { $skip: pageSize * (page - 1) },
             { $limit: pageSize }
         ];
 
-        // Count stage for total document count
         const countPipeline = [
             { $match: { drug_name: partialDrugName } },
+            { $group: { _id: '$drug_id' } },
             { $count: 'count' }
         ];
 
-        // Execute aggregation pipeline with $facet -> Facet actually make work two stage together
         const results = await Drug.aggregate([
             { $facet: { drugs: pipeline, count: countPipeline } }
         ]);
 
-        // Extract count from results (if count is not empty)
         const count = results[0].count.length > 0 ? results[0].count[0].count : 0;
 
-        // Respond with the result
         res.status(200).json({
             success: true,
-            drugs: results[0].drugs,
+            drugs: results[0].drugs.map(group => group.drug), // Extract the drug document from each group
             page,
             pages: Math.ceil(count / pageSize),
             count
