@@ -127,7 +127,7 @@ class DrugService{
 
 async showDrugWithName(req, res, next) {
     const partialDrugName = new RegExp(req.query.name, 'i');
-    const pageSize = 5;
+    const pageSize = 9;
     const page = Number(req.query.pageNumber) || 1;
 
     try {
