@@ -131,6 +131,13 @@ If you want to run test, please make sure you are inside of backend folder. Then
   
 ## Ekran Görüntüleri
 
-![Uygulama Ekran Görüntüsü](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+### Get drug by ID
+![getsingledrug](https://github.com/drugBankVTYS/backend/assets/93324656/65b39a7e-1fb8-41d2-afe9-4cbcb3636dcb)
+
+### Get all drugs with page
+![getalldrugs](https://github.com/drugBankVTYS/backend/assets/93324656/0ad7dcd2-3b76-43ad-b677-720bc86b4d42)
+
+### Get drug by Name
+![getdrugbyname](https://github.com/drugBankVTYS/backend/assets/93324656/e3cb8452-d728-4a56-82a2-701f1187748b)
 
   
