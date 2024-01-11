@@ -129,7 +129,7 @@ If you want to run test, please make sure you are inside of backend folder. Then
 ```
 
   
-## Ekran Görüntüleri
+## Screenshots
 
 ### Get drug by ID
 ![getsingledrug](https://github.com/drugBankVTYS/backend/assets/93324656/65b39a7e-1fb8-41d2-afe9-4cbcb3636dcb)
