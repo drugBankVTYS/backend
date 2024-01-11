@@ -25,6 +25,30 @@ I have tried to use different methods to get data more efficiently. We have work
 * mongoose
 * supertest
   
+## Install 
+
+To download project:
+
+Please clone the project
+```bash 
+    git clone https://github.com/drugBankVTYS/backend.git
+```
+Then open the folder and run commands below
+```bash 
+    cd backend
+    npm install 
+  ```
+Before run the project, please make sure you have .env file under backend folder. Please fill the places based on your preferences
+```bash 
+    PORT=..... 
+    DATABASE=" " 
+  ```
+You are already ready to run project. Run the command:
+```bash 
+    npm start
+  ```
+
+  
 ## API USAGE
 To see API documantation of the project, please go to "http://localhost:${PORT}/api-docs/#/" after you run
 
@@ -103,30 +127,6 @@ If you want to run test, please make sure you are inside of backend folder. Then
 ```bash
   npm run test
 ```
-
-  
-## Install 
-
-To download project:
-
-Please clone the project
-```bash 
-    git clone https://github.com/drugBankVTYS/backend.git
-```
-Then open the folder and run commands below
-```bash 
-    cd backend
-    npm install 
-  ```
-Before run the project, please make sure you have .env file under backend folder. Please fill the places based on your preferences
-```bash 
-    PORT=..... 
-    DATABASE=" " 
-  ```
-You are already ready to run project. Run the command:
-```bash 
-    npm start
-  ```
 
   
 ## Ekran Görüntüleri
